@@ -141,7 +141,6 @@ public class AvlTree<AnyType> {
             t.element = min.element;
             t.right = remove(0, t.right);
         } else {
-            t.leftSubTreeNum--;
             t = (t.left != null) ? t.left : t.right;
         }
 
