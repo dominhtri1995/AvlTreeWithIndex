@@ -10,6 +10,7 @@
  */
 package hackathon;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,7 +22,7 @@ import javafx.scene.input.KeyCode;
  *
  * @author TriDo
  */
-public class Hackathon<AnyType extends Comparable<? super AnyType>> implements java.util.List {
+public class Hackathon<AnyType> implements java.util.List {
 
     AvlTree<AnyType> tree = new AvlTree<AnyType>();
     int size = 0;
@@ -32,45 +33,49 @@ public class Hackathon<AnyType extends Comparable<? super AnyType>> implements j
 
     @Override
     public boolean add(Object e) {
-        if (e instanceof Comparable) {
-            tree.insert(size, (AnyType) e);
-            size++;
-            return true;
-        }
-        throw new UnknownError("Object not comparable");
+        tree.insert(size, (AnyType)e);
+        size++;
+        return true;
     }
 
     @Override
     public void add(int index, Object element) {
-        if (element instanceof Comparable) {
-            tree.insert(index, (AnyType) element);
-            size++;
-        } else {
-            throw new UnknownError("Object not comparable");
+        int result = tree.insert(index, (AnyType) element);
+        size++;
+        if (result == -1) {
+            throw new IndexOutOfBoundsException("Index out of bound. Please check the index");
         }
     }
 
     @Override
     public Object get(int index) {
-
-        return tree.get(index);
+        Object result = tree.get(index);
+        if (result == null) {
+            throw new IndexOutOfBoundsException("Index out of bound. Please check the index");
+        }
+        return result;
     }
 
     @Override
     public Object set(int index, Object element) {
 
-        if (element instanceof Comparable) {
-            tree.findAndReplace(index, (AnyType) element);
+        Object result = tree.findAndReplace(index, (AnyType) element);
+        if (result != null) {
             return element;
+        } else {
+            throw new IndexOutOfBoundsException("Index out of bound. Please check the index");
         }
-        throw new UnknownError("Object not comparable");
     }
 
     @Override
     public Object remove(int index) {
-        tree.remove(index);
+        int result = tree.remove(index);
         size--;
-        return null;
+        if (result == -1) {
+            throw new IndexOutOfBoundsException("Index out of bound. Please check the index");
+        } else {
+            return index;
+        }
     }
 
     // No need to implement ///////////////////////////
@@ -173,20 +178,18 @@ public class Hackathon<AnyType extends Comparable<? super AnyType>> implements j
         h.add(5);
         h.add(6);
         h.add(7);
-//        h.printTree();
 
         h.add(1, 10);
-//        h.printTree();
         h.add(1, 11);
-
+        h.set(4, 1);
+        System.out.println(h.get(1));
+        System.out.println(h.get(2));
+        System.out.println(h.get(4));
+        
         h.remove(1);
         System.out.println(h.get(1));
-//        System.out.println(h.get(2));
+//        h.printTree();
 
-//        h.set(1, 8);
-        System.out.println(h.get(1));
-        System.out.println(h.get(3));
-        h.printTree();
     }
 
 }

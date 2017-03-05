@@ -3,7 +3,7 @@
  */
 package hackathon;
 
-public class AvlTree<AnyType extends Comparable<? super AnyType>> {
+public class AvlTree<AnyType> {
 
     /**
      * The tree root.
@@ -14,16 +14,46 @@ public class AvlTree<AnyType extends Comparable<? super AnyType>> {
         root = null;
     }
 
-    public void insert(double index, AnyType x) {
+    public int insert(double index, AnyType x) {
+        //Check index out of bound
+        if (root == null) {
+            if (index != 0) {
+                return -1;
+            }
+        }
+        if (root != null && (index > root.leftSubTreeNum + numRightSubTree(root.right) + 2 || index < 0)) {
+            return -1;
+        }
+        // Insert
         root = insert(index, x, root);
+        return 1;
     }
 
-    public void remove(double x) {
-        root = remove(x, root);
+    public int remove(double index) {
+        if (root == null) {
+            return -1;
+        }
+        if (root != null && (index > root.leftSubTreeNum + numRightSubTree(root.right) || index < 0)) {
+            return -1;
+        }
+
+        root = remove(index, root);
+
+        return 1;
     }
 
-    public AnyType findAndReplace(double x, AnyType newValue) {
-        return findAndReplace(x, newValue, root);
+    public AnyType findAndReplace(double index, AnyType newValue) {
+        //Check index out of bound
+        if (root == null) {
+            if (index != 0) {
+                return null;
+            }
+        }
+        if (root != null && (index > root.leftSubTreeNum + numRightSubTree(root.right) || index < 0)) {
+            return null;
+        }
+
+        return findAndReplace(index, newValue, root);
     }
 
     public void makeEmpty() {
@@ -43,12 +73,24 @@ public class AvlTree<AnyType extends Comparable<? super AnyType>> {
     }
 
     public AnyType get(int index) {
+        if (root == null) {
+            return null;
+        }
+        if (root != null && (index > root.leftSubTreeNum + numRightSubTree(root.right) || index < 0)) {
+            return null;
+        }
+
         return find(index, root);
     }
 
+    private static final int ALLOWED_IMBALANCE = 1;
+
+    // Assume t is either balanced or within one of being balanced
+    /**
+     * Internal method to insert into a subtree.
+     */
     private AnyType find(int index, AvlNode<AnyType> t) {
         if (t == null) {
-            System.out.println("Not found");
             return null;
         }
         if (index == t.leftSubTreeNum) {
@@ -59,19 +101,13 @@ public class AvlTree<AnyType extends Comparable<? super AnyType>> {
             return find(index - t.leftSubTreeNum - 1, t.right);
         }
     }
-    private static final int ALLOWED_IMBALANCE = 1;
 
-    // Assume t is either balanced or within one of being balanced
-    /**
-     * Internal method to insert into a subtree.
-     */
     private AvlNode<AnyType> insert(double index, AnyType x, AvlNode<AnyType> t) {
         if (t == null) {
             System.out.println("New root :" + index + " " + x);
             return new AvlNode<>(index, x, null, null);
         }
 
-//        int compareResult = index.compareTo(t.index);
         if (index < t.index) {
             t.leftSubTreeNum++;
             t.left = insert(index, x, t.left);
@@ -103,7 +139,6 @@ public class AvlTree<AnyType extends Comparable<? super AnyType>> {
             AvlNode<AnyType> min = findMinForRemove(t.right);
             t.index = min.index;
             t.element = min.element;
-            
             t.right = remove(0, t.right);
         } else {
             t.leftSubTreeNum--;
@@ -150,7 +185,7 @@ public class AvlTree<AnyType extends Comparable<? super AnyType>> {
     private void printTree(AvlNode<AnyType> t) {
         if (t != null) {
             printTree(t.left);
-            System.out.println(t.index + "  leftsub:" + t.leftSubTreeNum +"  element:" +t.element);
+            System.out.println(t.index + "  leftsub:" + t.leftSubTreeNum + "  element:" + t.element);
             printTree(t.right);
         }
     }
@@ -188,8 +223,6 @@ public class AvlTree<AnyType extends Comparable<? super AnyType>> {
         k1.height = Math.max(height(k1.left), k2.height) + 1;
 
         k2.leftSubTreeNum = numRight;
-//        System.out.println("rotate with left child: "+k1.element +"  "+numRightSubTree(k1));
-//        System.out.println(""+k1.right.element);
         return k1;
     }
 
