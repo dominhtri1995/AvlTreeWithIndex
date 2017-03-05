@@ -10,13 +10,10 @@
  */
 package hackathon;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import javafx.scene.input.KeyCode;
 
 /**
  *
@@ -33,7 +30,7 @@ public class Hackathon<AnyType> implements java.util.List {
 
     @Override
     public boolean add(Object e) {
-        tree.insert(size, (AnyType)e);
+        tree.insert(size, (AnyType) e);
         size++;
         return true;
     }
@@ -41,10 +38,11 @@ public class Hackathon<AnyType> implements java.util.List {
     @Override
     public void add(int index, Object element) {
         int result = tree.insert(index, (AnyType) element);
-        size++;
         if (result == -1) {
             throw new IndexOutOfBoundsException("Index out of bound. Please check the index");
         }
+        size++;
+
     }
 
     @Override
@@ -70,10 +68,10 @@ public class Hackathon<AnyType> implements java.util.List {
     @Override
     public Object remove(int index) {
         int result = tree.remove(index);
-        size--;
         if (result == -1) {
             throw new IndexOutOfBoundsException("Index out of bound. Please check the index");
         } else {
+            size--;
             return index;
         }
     }
@@ -185,7 +183,7 @@ public class Hackathon<AnyType> implements java.util.List {
         System.out.println(h.get(1));
         System.out.println(h.get(2));
         System.out.println(h.get(4));
-        
+
         h.remove(1);
         System.out.println(h.get(1));
 //        h.printTree();
