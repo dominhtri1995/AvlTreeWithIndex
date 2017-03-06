@@ -108,13 +108,21 @@ public class AvlTree<AnyType> {
             return new AvlNode<>(index, x, null, null);
         }
 
-        if (index < t.index) {
+        if (((int)index - (int)t.index ==0 &&(int)t.index -t.index !=0)|| (0<index - t.index&& index - t.index <1 &&(int)t.index -t.index !=0)) { // 
+//            System.out.println("in here index :"+index +"   tindex: "+t.index);
+            t.leftSubTreeNum++;
+            t.left = insert(t.index - 0.0001, x, t.left);
+        }
+        else if (index < t.index) {
             t.leftSubTreeNum++;
             t.left = insert(index, x, t.left);
         } else if (index > t.index) {
+//            System.out.println(" larger ne");
             t.right = insert(index, x, t.right);
-        } else //Duplicate
+        } 
+        else //Duplicate
         {
+            System.out.println("Duplicate :" + t.index);
             t.leftSubTreeNum++;
             t.left = insert(index - 0.0001, x, t.left);
         }

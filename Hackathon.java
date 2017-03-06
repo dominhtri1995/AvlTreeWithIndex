@@ -173,20 +173,28 @@ public class Hackathon<AnyType> implements java.util.List {
     public static void main(String[] args) {
         // TODO code application logic here
         Hackathon h = new Hackathon();
-        h.add(5);
-        h.add(6);
-        h.add(7);
-
-        h.add(1, 10);
-        h.add(1, 11);
-        h.set(4, 1);
-        System.out.println(h.get(1));
+//        h.add(1);
+//        h.add(2);
+//        h.add(3);
+//        h.add(4);
+//        h.add(5);
+//        h.add(6);
+//        h.add(7);
+//        h.add(8);
+//        h.add(9);
+//        h.add(10);
+        h.add(0);
+        h.add(0.5);
+        for(int i =1;i<=10;i++){
+            h.add(1, i);
+        }
+//        h.remove(4);
+//        h.remove(6);
+        System.out.println(h.get(0));
         System.out.println(h.get(2));
         System.out.println(h.get(4));
-
-        h.remove(1);
-        System.out.println(h.get(1));
-//        h.printTree();
+//        System.out.println(h.get(1));
+        h.printTree();
 
     }
 
