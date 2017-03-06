@@ -185,16 +185,19 @@ public class Hackathon<AnyType> implements java.util.List {
 //        h.add(10);
         h.add(0);
         h.add(0.5);
-        for(int i =1;i<=10;i++){
+        for (int i = 1; i <= 10; i++) {
             h.add(1, i);
+//            System.out.println(h.get(1));
         }
-//        h.remove(4);
-//        h.remove(6);
-        System.out.println(h.get(0));
-        System.out.println(h.get(2));
-        System.out.println(h.get(4));
+        for (int i = 1; i <= 10; i++) {
+            System.out.println(h.get(1));
+            h.remove(1);
+//            h.printTree();
+//            System.out.println("*********\n\n");
+        }
+//        System.out.println(h.get(2));
+//        System.out.println(h.get(4));
 //        System.out.println(h.get(1));
-        h.printTree();
 
     }
 

@@ -108,21 +108,19 @@ public class AvlTree<AnyType> {
             return new AvlNode<>(index, x, null, null);
         }
 
-        if (((int)index - (int)t.index ==0 &&(int)t.index -t.index !=0)|| (0<index - t.index&& index - t.index <1 &&(int)t.index -t.index !=0)) { // 
+        if (((int) index - (int) t.index == 0 && (int) t.index - t.index != 0) || (0 < index - t.index && index - t.index < 1 && (int) t.index - t.index != 0)) { // 
 //            System.out.println("in here index :"+index +"   tindex: "+t.index);
             t.leftSubTreeNum++;
             t.left = insert(t.index - 0.0001, x, t.left);
-        }
-        else if (index < t.index) {
+        } else if (index < t.index) {
             t.leftSubTreeNum++;
             t.left = insert(index, x, t.left);
         } else if (index > t.index) {
 //            System.out.println(" larger ne");
             t.right = insert(index, x, t.right);
-        } 
-        else //Duplicate
+        } else //Duplicate
         {
-            System.out.println("Duplicate :" + t.index);
+//            System.out.println("Duplicate :" + t.index);
             t.leftSubTreeNum++;
             t.left = insert(index - 0.0001, x, t.left);
         }
@@ -145,10 +143,12 @@ public class AvlTree<AnyType> {
         } else if (t.left != null && t.right != null) // Two children
         {
             AvlNode<AnyType> min = findMinForRemove(t.right);
+//            System.out.println("2 child");
             t.index = min.index;
             t.element = min.element;
             t.right = remove(0, t.right);
         } else {
+//            System.out.println("1 ben null or 0");
             t = (t.left != null) ? t.left : t.right;
         }
 
@@ -161,7 +161,6 @@ public class AvlTree<AnyType> {
         }
 
         while (t.left != null) {
-            t.leftSubTreeNum--;
             t = t.left;
         }
         return t;
@@ -194,6 +193,7 @@ public class AvlTree<AnyType> {
             printTree(t.left);
             System.out.println(t.index + "  leftsub:" + t.leftSubTreeNum + "  element:" + t.element);
             printTree(t.right);
+
         }
     }
 
